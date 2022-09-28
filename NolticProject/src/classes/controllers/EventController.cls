@@ -5,7 +5,7 @@ public with sharing class EventController {
         List<Event> eventsList = [
                 SELECT Id, Subject, StartDateTime, EndDateTime
                 FROM Event
-                WHERE WhoId =: contactId
+                WHERE WhoId = :contactId
                 AND StartDateTime = TODAY
                 WITH SECURITY_ENFORCED
         ];
@@ -23,13 +23,16 @@ public with sharing class EventController {
     }
 
     @AuraEnabled
-    public static Event createEvent(Event ev, Id whoId) {
-        ev.WhoId = whoId;
-//        ev.ActivityDateTime = System.now();  // не створює івент з інпут філдів
-//        ev.DurationInMinutes = 60;
-        ev.OwnerId = UserInfo.getUserId();
+    public static Event createEvent(Datetime activity, Integer duration, Id whoId) {
+        Event ev = new Event(
+                ActivityDateTime = activity,
+                DurationInMinutes = duration,
+                WhoId = whoId,
+                OwnerId = UserInfo.getUserId()
+        );
         insert ev;
         return ev;
     }
-
 }
+
+
