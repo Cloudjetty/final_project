@@ -1,0 +1,12 @@
+:host {
+    --sds-c-card-color-background: linear-gradient(180deg, rgba(255,255,255,1) 80%, #fae8d2 100%);
+}
+.doctor-tile {
+    display: block;
+    border: 1px solid #d2955d;
+    border-radius: .25rem;
+    background-color: #fae8d2;
+}
+.doctor-silhouette {
+    height: 100px;
+}
