@@ -17,14 +17,11 @@
                                 options={options}
                                 onchange={handleSpecializationChange}>
             </lightning-combobox>
-            <lightning-input label="Start Date" type="datetime" value={columns.StartDate}
-                             onchange={handleStartDateChange}></lightning-input>
-            <lightning-input label="End Date" type="datetime" value={columns.EndDate}
-                             onchange={handleEndDateChange}></lightning-input>
-            <lightning-input label="Activity" type="datetime" value={columns.Activity}
+            <lightning-input label="Start date/time" type="datetime"
                              onchange={handleActivityChange}></lightning-input>
-            <lightning-input label="Duration" value={columns.Duration}
+            <lightning-input label="Duration"
                              onchange={handleDurationChange}></lightning-input>
+            <br>
             <lightning-button label="Save" onclick={handleClick}></lightning-button>
         </div>
         <div class="slds-card__body slds-card__body_inner">

@@ -1,12 +1,6 @@
 import {api, LightningElement, track, wire} from 'lwc';
 import searchDoctors from '@salesforce/apex/ContactController.searchDoctors';
 import getPatients from '@salesforce/apex/ContactController.getAllParticipants';
-import EVENT_OBJECT from '@salesforce/schema/Event';
-import START_DATE_FIELD from '@salesforce/schema/Event.StartDateTime';
-import END_DATE_FIELD from '@salesforce/schema/Event.EndDateTime';
-import Duration_FIELD from '@salesforce/schema/Event.DurationInMinutes';
-import Activity_FIELD from '@salesforce/schema/Event.ActivityDateTime';
-import WhoId_FIELD from '@salesforce/schema/Event.WhoId';
 import createEvent from '@salesforce/apex/EventController.createEvent';
 //import getEventPicklist from '@salesforce/apex/EventController.getEventPicklist';
 import {NavigationMixin} from 'lightning/navigation';
@@ -16,62 +10,41 @@ export default class BookingAppointmentsWithDoctors extends NavigationMixin(Ligh
 
     searchTerm = '';
 
-    @track startDate = START_DATE_FIELD;
-    @track endDate = END_DATE_FIELD;
-    @track duration = Duration_FIELD;
-    @track activity = Activity_FIELD;
-    @track value = WhoId_FIELD;
+    @track duration;
+    @track activity;
+    @track whoId;
     @track optionsArray = [];
 
-    columns = {
-        StartDate: this.startDate,
-        EndDate: this.endDate,
-        Duration: this.duration,
-        Activity: this.activity
-    }
-
-    handleStartDateChange(event) {
-        this.columns.StartDate = event.target.value;
-    }
-
-    handleEndDateChange(event) {
-        this.columns.EndDate = event.target.value;
-    }
-
     handleDurationChange(event) {
-        this.columns.Duration = event.target.value;
+        this.duration = event.target.value;
     }
 
     handleActivityChange(event) {
-        this.columns.Activity = event.target.value;
+        this.activity = event.target.value;
     }
 
     handlePatientChange(event) {
-        this.value = event.detail.value;
+        this.whoId = event.detail.value;
     }
 
     handleClick() {
-        createEvent({ev: this.columns, value: this.value}) // створюю івент, але інпут значення не зберігаються
+        createEvent({
+            activity: this.activity,
+            duration: this.duration,
+            whoId: this.whoId
+        })
             .then(result => {
-                this.message = result;
-                this.error = undefined;
-                if (this.message !== undefined) {
-                    this.columns.StartDate = '';
-                    this.columns.EndDate = '';
-                    this.columns.Duration = '';
-                    this.columns.Activity = '';
-                    console.log('test' + this.columns.StartDate);
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Success',
-                            message: 'Event created',
-                            variant: 'success',
-                        }),
-                    );
-                }
+                console.log('test');
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Event created',
+                        variant: 'success',
+                    }),
+                );
+                eval("$A.get('e.force:refreshView').fire();");
+                console.log('test 2');
                 console.log(JSON.stringify(result));
-                console.log('result', this.message);
-                console.log('test' + this.columns.StartDate);
             })
             .catch(error => {
                 this.message = undefined;
@@ -128,7 +101,7 @@ export default class BookingAppointmentsWithDoctors extends NavigationMixin(Ligh
                 actionName: 'view',
             },
         });
-        console.log('test' + doctorId);
+        console.log('test ' + doctorId);
     }
 }
 
