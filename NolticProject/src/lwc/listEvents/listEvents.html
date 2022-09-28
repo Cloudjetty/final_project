@@ -1,0 +1,22 @@
+<!--це тестова компонента!!!-->
+<template>
+    <div class="slds-card__body slds-card__body_inner">
+        <lightning-card title="Events Today">
+            <lightning-combobox label="Doctor"
+                                value={value}
+                                placeholder="-Select-"
+                                options={options}
+                                onchange={handleDoctorChange}>
+            </lightning-combobox>
+            <div class="slds-card__body slds-card__body_inner">
+                <template if:true={cardVisible}>
+                    <lightning-datatable key-field="id"
+                                         label="Events"
+                                         data={data}
+                                         columns={columns}>
+                    </lightning-datatable>
+                </template>
+            </div>
+        </lightning-card>
+    </div>
+</template>
