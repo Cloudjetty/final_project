@@ -2,26 +2,15 @@ public with sharing class CreateNewAppointmentPayout {
 
     public void createNewAppointmentPayout(List<Event> events) {
 
-        Set<Id> eventIds = new Set<Id>();
+        Set<Id> whoIds = new Set<Id>();
         for (Event event : events) {
-            eventIds.add(event.Id);
-        }
-
-        List<EventWhoRelation> whoRelations = [
-                SELECT Id, RelationId
-                FROM EventWhoRelation
-                WHERE EventId =: eventIds];
-
-
-        Set<Id> ids = new Set<Id>();
-        for (EventWhoRelation e : whoRelations) {
-            ids.add(e.RelationId);
+            whoIds.add(event.WhoId);
         }
 
         List<Contact> doctors = new List<Contact> ([
                 SELECT Name
                 FROM Contact
-                WHERE Id IN :ids
+                WHERE Id IN :whoIds
                 AND RecordType.Name = 'Doctor'
         ]);
 
