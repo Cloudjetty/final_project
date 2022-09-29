@@ -1,10 +1,4 @@
-public with sharing class TotalPaymentBatch implements Database.Batchable<SObject>, Database.Stateful, Schedulable {
-
-    public static String expression =  '0 0 0 L * ?'; // last day of month
-
-    public void execute(SchedulableContext sc) {
-        Database.executeBatch(new TotalPaymentBatch());
-    }
+public with sharing class TotalPaymentBatch implements Database.Batchable<SObject>, Database.Stateful {
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator('SELECT Id FROM Contact WHERE RecordType.Name = \'Doctor\'');
@@ -16,6 +10,7 @@ public with sharing class TotalPaymentBatch implements Database.Batchable<SObjec
                 SELECT Contact__c, SUM(Total_Payout__c) sum
                 FROM Appointment_Payout__c
                 WHERE Contact__c = :scope
+                AND Appointment_Date__c = THIS_MONTH
                 GROUP BY Contact__c
         ];
 
@@ -36,22 +31,10 @@ public with sharing class TotalPaymentBatch implements Database.Batchable<SObjec
                 WHERE Id = :bc.getJobId()
         ];
 
-        SendEmailDoctor.generateDoctorsPDF();
+        SendEmail.generateDoctorsPDF();
+        SendEmail.sendOwnerEmailAfterBatch(asyncApexJob);
 
-//        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-//        String[] toAddresses = new String[]{
-//                UserInfo.getUserEmail()
-//        };
-//
-//        message.setToAddresses(toAddresses);
-//        message.setSubject('Apex Sharing Recalculation ' + asyncApexJob.Status);
-//        message.setPlainTextBody('success');
-//
-//        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{
-//                message
-//        });
     }
 }
 
-//System.schedule('Send Email', TotalPaymentBatch.expression,new TotalPaymentBatch());
 //Id batchId = Database.executeBatch(new TotalPaymentBatch());
