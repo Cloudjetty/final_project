@@ -1,4 +1,3 @@
-<!--це тестова компонента!!!-->
 <template>
     <div class="slds-card__body_inner">
         <lightning-card title="Events Today">
@@ -8,12 +7,14 @@
                                 options={options}
                                 onchange={handleDoctorChange}>
             </lightning-combobox>
-            <div class="slds-card__body slds-card__body_inner">
+            <br>
+            <div class="slds-card__body_inner">
                 <template if:true={cardVisible}>
                     <lightning-datatable key-field="id"
                                          label="Events"
                                          data={data}
-                                         columns={columns}>
+                                         columns={columns}
+                                         hide-checkbox-column="true">
                     </lightning-datatable>
                 </template>
             </div>

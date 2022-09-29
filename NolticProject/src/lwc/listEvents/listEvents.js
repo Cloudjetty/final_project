@@ -3,8 +3,10 @@ import getDoctors from '@salesforce/apex/ContactController.getAllDoctors';
 import getEvents from '@salesforce/apex/EventController.getDoctorEvents';
 
 const columns = [
-    {label: 'Start', fieldName: 'StartDateTime'},
-    {label: 'End', fieldName: 'EndDateTime'}, //??? потрібно відобразити тільки час
+    {label: 'Start', fieldName: 'StartDateTime', type: 'date',
+        typeAttributes:{hour:'2-digit', minute:'2-digit', hour12:false}},
+    {label: 'End', fieldName: 'EndDateTime', type: 'date',
+        typeAttributes:{hour:'2-digit', minute:'2-digit', hour12:false}},
     {label: 'Event', fieldName: 'Subject'}
 ]
 export default class ListEvents extends LightningElement {
