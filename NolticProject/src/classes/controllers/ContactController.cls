@@ -14,7 +14,7 @@ public with sharing class ContactController {
     @AuraEnabled(Cacheable=true Scope='global')
     public static List<Contact> getAllDoctors() {
         List<Contact> contactsList = [
-                SELECT Id, Name, Email, Total_Payment__c
+                SELECT Id, Name, Email, Total_Payment__c, Specialization__c, Hourly_Rate__c
                 FROM Contact
                 WHERE RecordType.Name = 'Doctor'
                 WITH SECURITY_ENFORCED
@@ -22,23 +22,11 @@ public with sharing class ContactController {
         return contactsList;
     }
 
-
-    @AuraEnabled(Cacheable=true Scope='global')
-    public static List<Contact> getDoctors() {
-        return [
-                SELECT Id, Name, Specialization__c, Hourly_Rate__c
-                FROM Contact
-                WHERE RecordType.Name = 'Doctor'
-                WITH SECURITY_ENFORCED
-        ];
-
-    }
-
     @AuraEnabled(Cacheable=true Scope='global')
     public static List<Contact> searchDoctors(String searchTerm) {
         searchTerm = searchTerm.trim();
         if (searchTerm == '') {
-            return getDoctors();
+            return getAllDoctors();
         }
         searchTerm = '%' + searchTerm + '%';
         return [
