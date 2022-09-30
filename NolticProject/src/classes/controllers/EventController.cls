@@ -6,8 +6,9 @@ public with sharing class EventController {
                 SELECT Id, Subject, StartDateTime, EndDateTime
                 FROM Event
                 WHERE WhoId = :contactId
-                AND StartDateTime = TODAY
-                WITH SECURITY_ENFORCED
+                AND StartDateTime >= TODAY
+                ORDER BY StartDateTime
+
         ];
         return eventsList;
     }
@@ -23,11 +24,13 @@ public with sharing class EventController {
     }
 
     @AuraEnabled
-    public static Event createEvent(Datetime activity, Integer duration, Id whoId) {
+    public static Event createEvent(Datetime activity, Integer duration, Id patientId, Id whoId) {
         Event ev = new Event(
                 ActivityDateTime = activity,
                 DurationInMinutes = duration,
                 WhoId = whoId,
+                PatientWhoId__c = patientId,
+                Subject = 'Meeting',
                 OwnerId = UserInfo.getUserId()
         );
         insert ev;
