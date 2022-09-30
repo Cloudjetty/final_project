@@ -1,22 +1,30 @@
 public with sharing class ContactController {
 
+    @AuraEnabled
+    public static void insertPatient(Contact patient) {
+        insert patient;
+    }
+
     @AuraEnabled(Cacheable=true Scope='global')
-    public static List<Contact> getAllParticipants() {
+    public static List<Contact> getAllPatients() {
         List<Contact> contactsList = [
-                SELECT Id, Name
+                SELECT Id, Name, RecordTypeId
                 FROM Contact
                 WHERE RecordType.Name = 'Patient'
                 WITH SECURITY_ENFORCED
         ];
+        System.debug(contactsList);
         return contactsList;
     }
+
 
     @AuraEnabled(Cacheable=true Scope='global')
     public static List<Contact> getAllDoctors() {
         List<Contact> contactsList = [
-                SELECT Id, Name, Email, Total_Payment__c, Specialization__c, Hourly_Rate__c
+                SELECT Id, Name, Email, Total_Payment__c, Specialization__c, Hourly_Rate__c, Business_Hours__r.Name
                 FROM Contact
                 WHERE RecordType.Name = 'Doctor'
+             //   AND Email != NULL
                 WITH SECURITY_ENFORCED
         ];
         return contactsList;
