@@ -8,7 +8,7 @@ public with sharing class CreateNewAppointmentPayout {
             whoIds.add(event.WhoId);
         }
 
-        List<Contact> doctors = new List<Contact> ([
+        Map <Id, Contact> doctors = new Map<Id, Contact>([
                 SELECT Name
                 FROM Contact
                 WHERE Id IN :whoIds
@@ -18,14 +18,12 @@ public with sharing class CreateNewAppointmentPayout {
         List<Appointment_Payout__c> newApp = new List<Appointment_Payout__c>();
 
         for (Event event : events) {
-            for (Contact doctor : doctors) {
                 if (!doctors.isEmpty() && event.Status__c == 'Completed') {
                     newApp.add(new Appointment_Payout__c(
-                            Contact__c = doctor.Id,
+                            Contact__c = doctors.get(event.WhoId).Id,
                             Appointment_Date__c = event.ActivityDateTime,
                             Duration__c = event.DurationInMinutes
                     ));
-                }
             }
         }
         insert newApp;
