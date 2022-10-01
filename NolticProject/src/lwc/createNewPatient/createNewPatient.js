@@ -20,7 +20,6 @@ export default class CreateNewPatient extends LightningElement {
         EMAIL:this.email,
     }
 
-
     handlefNameChange(event) {
         this.rec.FNAME = event.target.value;
         window.console.log("FNAME", this.rec.FNAME);
@@ -51,7 +50,6 @@ export default class CreateNewPatient extends LightningElement {
             RecordTypeId: '0127Q000000uhyxQAA'
         }
         insertContact ({ patient : contact })
-   //     insertContact ({ con : this.rec })
             .then(result => {
                 this.message = result;
                 this.error = undefined;
@@ -60,7 +58,7 @@ export default class CreateNewPatient extends LightningElement {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
-                            message: 'Account created',
+                            message: 'Patient created',
                             variant: 'success',
                         }),
                     );
