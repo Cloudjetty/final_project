@@ -1,8 +1,9 @@
 public with sharing class CreateNewAppointmentPayout {
 
-    public void createNewAppointmentPayout(List<Event> events) {
+    public static List<Appointment_Payout__c> createNewAppointmentPayout(List<Event> events) {
 
         Set<Id> whoIds = new Set<Id>();
+
         for (Event event : events) {
             whoIds.add(event.WhoId);
         }
@@ -28,6 +29,18 @@ public with sharing class CreateNewAppointmentPayout {
             }
         }
         insert newApp;
+        return newApp;
+    }
+
+    public static void updateEventWhatIdField(List<Event> events) {
+
+        List<Appointment_Payout__c> newApp = createNewAppointmentPayout(events);
+
+        for (Event event : events) {
+            for (Appointment_Payout__c ap : newApp) {
+                event.WhatId = ap.Id;
+            }
+        }
     }
 }
 
