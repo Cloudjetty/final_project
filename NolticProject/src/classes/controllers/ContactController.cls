@@ -13,10 +13,21 @@ public with sharing class ContactController {
                 WHERE RecordType.Name = 'Patient'
                 WITH SECURITY_ENFORCED
         ];
-        System.debug(contactsList);
         return contactsList;
     }
 
+    @AuraEnabled(Cacheable=true Scope='global')
+    public static List<Contact> getDoctors(String specialization) {
+        List<Contact> contactsList = [
+                SELECT Id, Name
+                FROM Contact
+                WHERE RecordType.Name = 'Doctor'
+                AND Specialization__c =: specialization
+                //   AND Email != NULL
+                WITH SECURITY_ENFORCED
+        ];
+        return contactsList;
+    }
 
     @AuraEnabled(Cacheable=true Scope='global')
     public static List<Contact> getAllDoctors() {

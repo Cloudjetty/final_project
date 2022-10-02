@@ -7,6 +7,7 @@ public with sharing class EventController {
                 FROM Event
                 WHERE WhoId = :contactId
                 AND StartDateTime >= TODAY
+                AND Status__c = 'Pending'
                 ORDER BY StartDateTime
 
         ];
@@ -24,9 +25,10 @@ public with sharing class EventController {
     }
 
     @AuraEnabled
-    public static Event createEvent(Datetime activity, Integer duration, Id patientId, Id whoId) {
+    public static Event createEvent(Datetime activity, Integer duration, Id patientId, Id whoId, String special) {
         Event ev = new Event(
                 ActivityDateTime = activity,
+                Specialization__c = special,
                 DurationInMinutes = duration,
                 WhoId = whoId,
                 PatientWhoId__c = patientId,
