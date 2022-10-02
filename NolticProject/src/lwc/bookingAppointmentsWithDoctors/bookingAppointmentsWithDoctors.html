@@ -1,21 +1,27 @@
 <template>
     <lightning-card title="Booking Appointments" icon-name="utility:note">
         <div class="slds-card__body slds-card__body_inner">
-            <lightning-combobox class="yourPicklistClass"
-                                name="progress"
+            <lightning-combobox required="true"
+                                name="patient"
                                 label="Patient"
-                                value={value}
+                                value={patient}
                                 placeholder="-Select-"
                                 options={options}
                                 onchange={handlePatientChange}>
             </lightning-combobox>
-            <lightning-combobox class="yourPicklistClass"
-                                name="progress"
-                                label="Specialization"
-                                value={value}
+            <template if:true={specializationPickList.data}>
+                <lightning-combobox name="specialization"
+                                    label="Specialization"
+                                    options={specializationPickList.data.values}
+                                    onchange={handleSpecializationChange}>
+                </lightning-combobox>
+            </template>
+            <lightning-combobox required="true"
+                                name="doctor"
+                                label="Doctor"
                                 placeholder="-Select-"
-                                options={options}
-                                onchange={handleSpecializationChange}>
+                                options={options2}
+                                onchange={handleDoctorChange}>
             </lightning-combobox>
             <lightning-input label="Start date/time" type="datetime"
                              onchange={handleActivityChange}></lightning-input>
