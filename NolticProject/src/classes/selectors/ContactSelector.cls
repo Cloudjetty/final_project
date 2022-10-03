@@ -37,7 +37,7 @@ public with sharing class ContactSelector {
                         Specialization__c, Hourly_Rate__c, Business_Hours__r.Name
                 FROM Contact
                 WHERE RecordType.Name = 'Doctor'
-                //     AND Email != NULL
+                // AND Email != NULL
         ];
     }
 
