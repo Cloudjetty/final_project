@@ -4,7 +4,7 @@ public with sharing class ContactControllerTest {
     @IsTest
     public static void insertPatient() {
 
-        Contact patient = ContactDataFactory.createContact();
+        Contact patient = ContactDataFactory.createPatient();
 
         Test.startTest();
             ContactController.insertPatient(patient);

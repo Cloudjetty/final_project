@@ -1,9 +1,12 @@
 @IsTest
 public with sharing class ContactDataFactory {
 
-    public static Contact createContact() {
+    public static Contact createPatient() {
+        Id recordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Patient').getRecordTypeId();
         return new Contact(
-                LastName = 'Test'
+                LastName = 'Test',
+                RecordTypeId = recordTypeId
+
         );
     }
 
