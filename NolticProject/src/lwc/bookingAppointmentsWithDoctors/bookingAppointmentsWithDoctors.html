@@ -23,8 +23,10 @@
                                 options={options2}
                                 onchange={handleDoctorChange}>
             </lightning-combobox>
+            <lightning-helptext content="Enter the date of the visit to the doctor"></lightning-helptext>
             <lightning-input required="true" label="Start date/time" type="datetime"
-                             onchange={handleActivityChange}></lightning-input>
+                             onchange={handleActivityChange} ></lightning-input >
+            <lightning-helptext content="Duration of visit in minutes. Enter by example: 30, 60, 90"></lightning-helptext>
             <lightning-input required="true" label="Duration"
                              onchange={handleDurationChange}></lightning-input>
             <br>

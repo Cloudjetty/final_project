@@ -11,6 +11,7 @@ public with sharing class EventService {
     public static Event createNewEvent(Datetime activity, Integer duration, Id patientId, Id whoId, String special) {
 
         Event doctorsEvent =  new Event(
+                StartDateTime = activity,
                 ActivityDateTime = activity,
                 Specialization__c = special,
                 DurationInMinutes = duration,

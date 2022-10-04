@@ -92,7 +92,7 @@ export default class BookingAppointmentsWithDoctors extends NavigationMixin(Ligh
                 this.error = error;
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Error creating record',
+                        title: 'Please choose another time.',
                         message: error.body.message,
                         variant: 'error',
                     }),

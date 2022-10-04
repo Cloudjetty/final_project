@@ -3,7 +3,10 @@ public with sharing class EventSelector {
     public static List<Event> getEvents(Set<Id> doctorIds) {
         return [
                 SELECT
-                        ActivityDateTime
+                        ActivityDateTime,
+                        StartDateTime,
+                        EndDateTime,
+                        DurationInMinutes
                 FROM Event
                 WHERE WhoId = :doctorIds
         ];
