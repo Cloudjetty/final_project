@@ -17,7 +17,7 @@ public with sharing class ContactController {
 
     @AuraEnabled(Cacheable=true Scope='global')
     public static List<Contact> getDoctors(String specialization) {
-        return ContactService.getDoctors(specialization);
+        return ContactService.getDoctorsWithSpecialization(specialization);
     }
 
     @AuraEnabled(Cacheable=true Scope='global')

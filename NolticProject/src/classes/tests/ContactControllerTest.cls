@@ -60,7 +60,7 @@ public with sharing class ContactControllerTest {
 
             String specialization2 = '';
 
-            List<Contact> result2 = ContactService.getDoctors(specialization2);
+            List<Contact> result2 = ContactService.getDoctorsWithSpecialization(specialization2);
 
         Test.stopTest();
 

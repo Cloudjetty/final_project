@@ -1,10 +1,11 @@
 public with sharing class ContactService {
 
-    public static List<Contact> getDoctors(String specialization) {
+    public static List<Contact> getDoctorsWithSpecialization(String specialization) {
+
         if (specialization == '') {
             return ContactSelector.getAllDoctors();
         }
-        return ContactSelector.getDoctors(specialization);
+        return ContactSelector.getDoctorsWithSpecialization(specialization);
     }
 
     public static List<Contact> searchDoctors(String searchTerm) {

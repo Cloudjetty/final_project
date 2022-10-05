@@ -1,8 +1,8 @@
 public with sharing class EventService {
 
-    public static List<Event> getDoctorEvents() {
+    public static List<Event> getDoctorEvents(Set<Id> contactIds) {
 
-        Map<Id, Contact> doctors = new Map<Id, Contact>(ContactSelector.getEventsDoctors());
+        Map<Id, Contact> doctors = new Map<Id, Contact>(ContactSelector.getEventsDoctors(contactIds));
 
         return EventSelector.getEvents(doctors.keySet());
 
@@ -22,5 +22,15 @@ public with sharing class EventService {
         );
         insert doctorsEvent;
         return doctorsEvent;
+    }
+
+    public static Set<Id> getEventsWhoIds(List<Event> events) {
+
+        Set<Id> whoIds = new Set<Id>();
+
+        for (Event event : events) {
+            whoIds.add(event.WhoId);
+        }
+        return whoIds;
     }
 }

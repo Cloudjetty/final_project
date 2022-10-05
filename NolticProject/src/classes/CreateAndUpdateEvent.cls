@@ -1,18 +1,9 @@
 public with sharing class CreateAndUpdateEvent {
 
-    public static Set<Id> getEventsWhoIds(List<Event> events) {
-
-        Set<Id> whoIds = new Set<Id>();
-
-        for (Event event : events) {
-            whoIds.add(event.WhoId);
-        }
-        return whoIds;
-    }
 
     public static List<Appointment_Payout__c> createNewAppointmentPayout(List<Event> events) {
 
-        Map <Id, Contact> doctors = new Map <Id, Contact>(ContactSelector.getDoctors(getEventsWhoIds(events)));
+        Map <Id, Contact> doctors = new Map <Id, Contact>(ContactSelector.getDoctors(EventService.getEventsWhoIds(events)));
 
         List<Appointment_Payout__c> newApp = new List<Appointment_Payout__c>();
 
@@ -42,7 +33,7 @@ public with sharing class CreateAndUpdateEvent {
 
     public static void updateEventFieldSpecialization(List<Event> events) {
 
-        Map <Id, Contact> doctors = new Map <Id, Contact>(ContactSelector.getDoctors(getEventsWhoIds(events)));
+        Map <Id, Contact> doctors = new Map <Id, Contact>(ContactSelector.getDoctors(EventService.getEventsWhoIds(events)));
 
         for (Event event : events) {
             event.Specialization__c = doctors.get(event.WhoId).Specialization__c;

@@ -10,14 +10,15 @@ public with sharing class ContactSelector {
         ];
     }
 
-    public static List<Contact> getEventsDoctors() {
+    public static List<Contact> getEventsDoctors(Set<Id> contactIds) {
         return [
                 SELECT
                         Id, Name, Specialization__c,
                 (SELECT
                         Id FROM OpenActivities WHERE IsTask = FALSE)
                 FROM Contact
-                WHERE RecordType.Name = 'Doctor'
+                WHERE Id IN :contactIds
+                AND RecordType.Name = 'Doctor'
         ];
     }
 
@@ -37,7 +38,6 @@ public with sharing class ContactSelector {
                         Specialization__c, Hourly_Rate__c, Business_Hours__r.Name
                 FROM Contact
                 WHERE RecordType.Name = 'Doctor'
-                // AND Email != NULL
         ];
     }
 
@@ -54,13 +54,14 @@ public with sharing class ContactSelector {
         ];
     }
 
-    public static List<Contact> getDoctors(String specialization) {
+    public static List<Contact> getDoctorsWithSpecialization(String specialization) {
         return [
                 SELECT
                         Id, Name
                 FROM Contact
                 WHERE RecordType.Name = 'Doctor'
                 AND Specialization__c =: specialization
+
         ];
     }
 }

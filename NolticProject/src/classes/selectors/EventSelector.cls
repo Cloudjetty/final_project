@@ -6,7 +6,8 @@ public with sharing class EventSelector {
                         ActivityDateTime,
                         StartDateTime,
                         EndDateTime,
-                        DurationInMinutes
+                        DurationInMinutes,
+                        WhoId
                 FROM Event
                 WHERE WhoId = :doctorIds
         ];

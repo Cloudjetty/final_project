@@ -6,7 +6,7 @@
                                 label="Patient"
                                 value={patient}
                                 placeholder="-Select-"
-                                options={options}
+                                options={optionsPatient}
                                 onchange={handlePatientChange}>
             </lightning-combobox>
             <template if:true={specializationPickList.data}>
@@ -20,7 +20,7 @@
                                 name="doctor"
                                 label="Doctor"
                                 placeholder="-Select-"
-                                options={options2}
+                                options={optionsDoctor}
                                 onchange={handleDoctorChange}>
             </lightning-combobox>
             <lightning-helptext content="Enter the date of the visit to the doctor"></lightning-helptext>

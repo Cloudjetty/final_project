@@ -5,6 +5,7 @@
     <isExposed>true</isExposed>
     <masterLabel>Create New Patient</masterLabel>
     <targets>
+        <target>lightning__RecordAction</target>
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>

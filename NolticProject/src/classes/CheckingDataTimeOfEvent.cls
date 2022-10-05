@@ -2,7 +2,7 @@ public with sharing class CheckingDataTimeOfEvent {
 
     public static void checkingDataTimeOfEvent(List<Event> events) {
 
-        List<Event> oldEvents = EventService.getDoctorEvents();
+        List<Event> oldEvents = EventService.getDoctorEvents(EventService.getEventsWhoIds(events));
 
         for (Event event : events) {
             for (Event oldEvent : oldEvents) {

@@ -3,6 +3,7 @@ import searchDoctors from '@salesforce/apex/ContactController.searchDoctors';
 import getPatients from '@salesforce/apex/ContactController.getAllPatients';
 import getDoctors from '@salesforce/apex/ContactController.getDoctors';
 import createEvent from '@salesforce/apex/EventController.createEvent';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
 import {getPicklistValues, getObjectInfo} from 'lightning/uiObjectInfoApi';
 import Specialization_FIELD from '@salesforce/schema/Contact.Specialization__c';
 import {NavigationMixin} from 'lightning/navigation';
@@ -23,8 +24,17 @@ export default class BookingAppointmentsWithDoctors extends NavigationMixin(Ligh
     @wire(searchDoctors, {searchTerm: '$searchTerm'})
     doctors;
 
+    @wire(getObjectInfo, {objectApiName: CONTACT_OBJECT})
+    contactInfo;
+
+    @wire(getPicklistValues, {
+        recordTypeId: '$contactInfo.data.defaultRecordTypeId',
+        fieldApiName: Specialization_FIELD
+    })
+    specializationPickList;
+
     @wire(getPatients)
-    connectedCallBack() {
+    getAllPatients() {
         getPatients()
             .then(r => {
                 this.optionsArrayPatients = [];
@@ -34,16 +44,13 @@ export default class BookingAppointmentsWithDoctors extends NavigationMixin(Ligh
             })
     }
 
-    @wire(getPicklistValues, {recordTypeId: '012000000000000AAA', fieldApiName: Specialization_FIELD})
-    specializationPickList;
-
     handleSpecializationChange(event) {
         this.picklistValue = event.target.value;
-        this.connectedCall();
+        this.getAllDoctors();
     }
 
     @wire(getDoctors)
-    connectedCall() {
+    getAllDoctors() {
         getDoctors({specialization: this.picklistValue})
             .then(r => {
                 this.optionsArrayDoctors = [];
@@ -88,11 +95,9 @@ export default class BookingAppointmentsWithDoctors extends NavigationMixin(Ligh
                 eval("$A.get('e.force:refreshView').fire();");
             })
             .catch(error => {
-                this.message = undefined;
-                this.error = error;
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Please choose another time.',
+                        title: 'Failed to create Event',
                         message: error.body.message,
                         variant: 'error',
                     }),
@@ -100,11 +105,11 @@ export default class BookingAppointmentsWithDoctors extends NavigationMixin(Ligh
             });
     }
 
-    get options() {
+    get optionsPatient() {
         return this.optionsArrayPatients;
     }
 
-    get options2() {
+    get optionsDoctor() {
         return this.optionsArrayDoctors;
     }
 

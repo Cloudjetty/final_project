@@ -7,7 +7,12 @@ public with sharing class EventController {
 
     @AuraEnabled
     public static Event createEvent(Datetime activity, Integer duration, Id patientId, Id whoId, String special) {
-        return EventService.createNewEvent(activity, duration, patientId, whoId, special);
+        try {
+            return EventService.createNewEvent(activity, duration, patientId, whoId, special);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            throw new ExternalObjectException(errorMsg);
+        }
     }
 }
 
