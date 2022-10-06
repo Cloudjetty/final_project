@@ -1,0 +1,9 @@
+.doctor-tile {
+    display: block;
+    border: 1px solid #d2955d;
+    border-radius: .25rem;
+    background-color: #fae8d2;
+}
+.doctor-silhouette {
+    height: 90px;
+}
