@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title={doctor.Specialization__c} class="doctor-tile">
+        <div slot="actions">
+            <lightning-button-icon
+                    icon-name="utility:search"
+                    icon-class="doctor-tile-button"
+                    variant="bare"
+                    alternative-text="Open record"
+                    onclick={handleOpenRecordClick}>
+            </lightning-button-icon>
+        </div>
+        <div class="slds-var-p-horizontal_small">
+            <div class="slds-media">
+                <div class="slds-media__figure">
+                    <img src={appResources.doctorSilhouette} alt="Doctor profile" class="doctor-silhouette"/>
+                </div>
+                <div class="slds-media__body">
+                    <p class="slds-var-m-bottom_xx-small"> Doctor Name - {doctor.Name}</p>
+                    <p class="slds-var-m-bottom_xx-small"> Hourly Rate - {doctor.Hourly_Rate__c}</p>
+<!--                    <p class="slds-var-m-bottom_xx-small"> Email - {doctor.Email}</p>-->
+<!--                    <p class="slds-var-m-bottom_xx-small"> Business Hours - {doctor.Business_Hours__r.Name}</p>-->
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>
